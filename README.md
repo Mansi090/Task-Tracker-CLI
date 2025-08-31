@@ -144,11 +144,59 @@ ID: 1 | Title: Learn Advanced Python | Status: in-progress | Priority: Medium
 
 ---
 
+## DevOps: CI, Tests, Docker 🛠️
+
+### Continuous Integration (GitHub Actions)
+- Workflow: `.github/workflows/ci.yml`
+- Runs on every push and pull request:
+  - Lint with flake8
+  - Check formatting with black
+  - Run tests with pytest and coverage
+
+You can see results in the GitHub Actions tab after pushing to GitHub.
+
+### Development Setup
+- Optional tools for local dev:
+  ```bash
+  pip install -r requirements-dev.txt
+  ```
+
+- Lint and format checks:
+  ```bash
+  flake8 src tests
+  black --check src tests
+  ```
+
+- Run tests with coverage:
+  ```bash
+  pytest -q --cov=src --cov-report=term-missing
+  ```
+
+### Docker (Run Anywhere)
+- Build the image:
+  ```bash
+  docker build -t task-tracker-cli .
+  ```
+- Run the CLI (stores tasks.json inside the container):
+  ```bash
+  docker run -it --rm task-tracker-cli
+  ```
+- Persist tasks to your host (maps current folder):
+  ```bash
+  docker run -it --rm -v "$PWD:/data" -w /data task-tracker-cli
+  ```
+  On Windows PowerShell, use:
+  ```powershell
+  docker run -it --rm -v ${PWD}:/data -w /data task-tracker-cli
+  ```
+
+---
+
 ## Notes 📌
 
 - **Case-Insensitive Inputs**: Status and priority inputs are case-insensitive (e.g., "high", "HIGH", or "High" are all valid).
 - **Error Handling**: The tool provides clear error messages for invalid inputs, such as non-numeric task IDs or invalid statuses.
-- **Persistence**: Tasks are saved to `tasks.json` in the `src` directory. If the file is missing or corrupted, the program starts with an empty task list.
+- **Persistence**: Tasks are saved to `tasks.json` in the current working directory (where you run the program). If the file is missing or corrupted, the program starts with an empty task list.
 - **File Permissions**: Ensure the program has write permissions in the directory to save `tasks.json`.
 
 ---
@@ -164,9 +212,3 @@ Want to improve the Enhanced Task Tracker? Contributions are welcome!
 5. Submit a pull request.
 
 ---
-
-## License 📜
-
-This project is licensed under the MIT License.
-
-Enjoy productive task tracking! 🎉
