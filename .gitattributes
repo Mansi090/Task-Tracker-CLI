@@ -1,0 +1,8 @@
+* text=auto
+
+# Enforce LF for source files to keep Black consistent across OSes
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
