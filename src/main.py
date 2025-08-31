@@ -6,17 +6,31 @@ from typing import List, Dict, Optional
 VALID_STATUSES = {"todo", "in-progress", "done"}
 VALID_PRIORITIES = {"High", "Medium", "Low"}
 
+
 # Task structure
+
+
 class Task:
-    def __init__(self, task_id: int, title: str, status: str = "todo", priority: str = "Low"):
+    def __init__(
+        self,
+        task_id: int,
+        title: str,
+        status: str = "todo",
+        priority: str = "Low",
+    ):
         if not isinstance(task_id, int) or task_id < 1:
             raise ValueError("Task ID must be a positive integer.")
         if not title.strip():
             raise ValueError("Task title cannot be empty.")
         if status.lower() not in VALID_STATUSES:
-            raise ValueError(f"Invalid status. Valid options: {', '.join(VALID_STATUSES)}")
+            raise ValueError(
+                f"Invalid status. Valid options: {', '.join(VALID_STATUSES)}"
+            )
         if priority.capitalize() not in VALID_PRIORITIES:
-            raise ValueError(f"Invalid priority. Valid options: {', '.join(VALID_PRIORITIES)}")
+            raise ValueError(
+                "Invalid priority. Valid options: "
+                f"{', '.join(VALID_PRIORITIES)}"
+            )
         self.id = task_id
         self.title = title.strip()
         self.status = status.lower()
@@ -30,7 +44,10 @@ class Task:
             "priority": self.priority
         }
 
+
 # Task List Manager
+
+
 class TaskList:
     def __init__(self):
         self.tasks: List[Task] = []
@@ -51,12 +68,20 @@ class TaskList:
             print("Error: Task not found.")
             return
         if status.lower() not in VALID_STATUSES:
-            print(f"Error: Invalid status. Valid options: {', '.join(VALID_STATUSES)}")
+            print(
+                "Error: Invalid status. Valid options: "
+                f"{', '.join(VALID_STATUSES)}"
+            )
             return
         task.status = status.lower()
         print(f"Task ID {task_id} updated to status '{status}'.")
 
-    def update_task(self, task_id: int, title: Optional[str] = None, priority: Optional[str] = None) -> None:
+    def update_task(
+        self,
+        task_id: int,
+        title: Optional[str] = None,
+        priority: Optional[str] = None,
+    ) -> None:
         task = self._find_task(task_id)
         if not task:
             print("Error: Task not found.")
@@ -66,7 +91,10 @@ class TaskList:
                 task.title = title.strip()
             if priority is not None:
                 if priority.capitalize() not in VALID_PRIORITIES:
-                    print(f"Error: Invalid priority. Valid options: {', '.join(VALID_PRIORITIES)}")
+                    print(
+                        "Error: Invalid priority. Valid options: "
+                        f"{', '.join(VALID_PRIORITIES)}"
+                    )
                     return
                 task.priority = priority.capitalize()
             if title is not None or priority is not None:
@@ -76,21 +104,42 @@ class TaskList:
         except ValueError as e:
             print(f"Error: {e}")
 
-    def list_tasks(self, status_filter: str = "all", priority_filter: str = "all") -> None:
+    def list_tasks(
+        self,
+        status_filter: str = "all",
+        priority_filter: str = "all",
+    ) -> None:
         status_filter = status_filter.lower()
         priority_filter = priority_filter.lower()
         if status_filter not in VALID_STATUSES | {"all"}:
-            print(f"Error: Invalid status filter. Valid options: {', '.join(VALID_STATUSES | {'all'})}")
+            print(
+                "Error: Invalid status filter. Valid options: "
+                f"{', '.join(VALID_STATUSES | {'all'})}"
+            )
             return
-        if priority_filter not in {p.lower() for p in VALID_PRIORITIES} | {"all"}:
-            print(f"Error: Invalid priority filter. Valid options: {', '.join(VALID_PRIORITIES | {'all'})}")
+        allowed_priorities = (
+            {p.lower() for p in VALID_PRIORITIES} | {"all"}
+        )
+        if priority_filter not in allowed_priorities:
+            print(
+                "Error: Invalid priority filter. Valid options: "
+                f"{', '.join(VALID_PRIORITIES | {'all'})}"
+            )
             return
         print("\nTasks:")
         count = 0
         for task in self.tasks:
-            if (status_filter == "all" or task.status == status_filter) and \
-               (priority_filter == "all" or task.priority.lower() == priority_filter):
-                print(f"ID: {task.id} | Title: {task.title} | Status: {task.status} | Priority: {task.priority}")
+            if (
+                (status_filter == "all" or task.status == status_filter)
+                and (
+                    priority_filter == "all"
+                    or task.priority.lower() == priority_filter
+                )
+            ):
+                print(
+                    f"ID: {task.id} | Title: {task.title} | "
+                    f"Status: {task.status} | Priority: {task.priority}"
+                )
                 count += 1
         if count == 0:
             print("No tasks found.")
@@ -101,7 +150,10 @@ class TaskList:
             print("Error: Task not found.")
             return
         while True:
-            confirm = input(f"Are you sure you want to delete task '{task.title}'? (yes/no): ").strip().lower()
+            confirm = input(
+                f"Are you sure you want to delete task '{task.title}'? "
+                "(yes/no): "
+            ).strip().lower()
             if confirm in ["yes", "no"]:
                 break
             print("Error: Please enter 'yes' or 'no'.")
@@ -120,7 +172,10 @@ class TaskList:
         count = 0
         for task in self.tasks:
             if keyword in task.title.lower():
-                print(f"ID: {task.id} | Title: {task.title} | Status: {task.status} | Priority: {task.priority}")
+                print(
+                    f"ID: {task.id} | Title: {task.title} | "
+                    f"Status: {task.status} | Priority: {task.priority}"
+                )
                 count += 1
         if count == 0:
             print("No tasks found matching the keyword.")
@@ -128,10 +183,16 @@ class TaskList:
     def sort_tasks(self, by: str, ascending: bool = True) -> None:
         valid_fields = {"id", "title", "status", "priority"}
         if by.lower() not in valid_fields:
-            print(f"Error: Invalid sort field. Valid options: {', '.join(valid_fields)}")
+            print(
+                "Error: Invalid sort field. Valid options: "
+                f"{', '.join(valid_fields)}"
+            )
             return
         try:
-            self.tasks.sort(key=lambda t: getattr(t, by.lower()), reverse=not ascending)
+            self.tasks.sort(
+                key=lambda t: getattr(t, by.lower()),
+                reverse=not ascending,
+            )
             print("Tasks sorted successfully.")
             self.list_tasks()
         except AttributeError:
@@ -150,7 +211,10 @@ class TaskList:
 
     def load_from_file(self, filename: str) -> None:
         if not os.path.exists(filename):
-            print(f"Warning: File {filename} does not exist. Starting with an empty task list.")
+            print(
+                f"Warning: File {filename} does not exist. "
+                "Starting with an empty task list."
+            )
             return
         try:
             with open(filename, "r") as f:
@@ -182,7 +246,6 @@ class TaskList:
         return next((task for task in self.tasks if task.id == task_id), None)
 
 
-
 def display_menu():
     print("\nEnhanced Task Tracker CLI (Python)")
     print("1. Add Task")
@@ -193,7 +256,6 @@ def display_menu():
     print("6. Search Tasks")
     print("7. Sort Tasks")
     print("8. Exit")
-
 
 
 def main():
@@ -271,6 +333,7 @@ def main():
                 "Invalid choice. Please select a number between "
                 "1 and 8."
             )
+
 
 if __name__ == "__main__":
     main()
