@@ -206,7 +206,9 @@ def main():
         elif choice == "2":
             try:
                 task_id = int(input("Enter task ID to update: ").strip())
-                status = input("Enter new status (todo, in-progress, done): ").strip()
+                status = input(
+                    "Enter new status (todo, in-progress, done): "
+                ).strip()
                 task_list.update_task_status(task_id, status)
             except ValueError:
                 print("Error: Invalid task ID. Please enter a number.")
@@ -215,9 +217,12 @@ def main():
             try:
                 task_id = int(input("Enter task ID to update: ").strip())
                 print("Leave blank to keep current value.")
-                title = input("Enter new title (or press Enter to skip): ").strip()
+                title = input(
+                    "Enter new title (or press Enter to skip): "
+                ).strip()
                 priority = input(
-                    "Enter new priority (High, Medium, Low, or press Enter to skip): "
+                    "Enter new priority (High, Medium, Low, "
+                    "or press Enter to skip): "
                 ).strip()
                 task_list.update_task(task_id, title or None, priority or None)
             except ValueError:
@@ -257,7 +262,8 @@ def main():
 
         else:
             print(
-                "Invalid choice. Please select a number between 1 and 8."
+                "Invalid choice. Please select a number between "
+                "1 and 8."
             )
 
 
