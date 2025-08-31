@@ -252,5 +252,6 @@ def main():
         else:
             print("Invalid choice. Please select a number between 1 and 8.")
 
+
 if __name__ == "__main__":
     main()
