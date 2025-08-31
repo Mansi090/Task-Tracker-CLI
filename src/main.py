@@ -28,8 +28,7 @@ class Task:
             )
         if priority.capitalize() not in VALID_PRIORITIES:
             raise ValueError(
-                "Invalid priority. Valid options: "
-                f"{', '.join(VALID_PRIORITIES)}"
+                "Invalid priority. Valid options: " f"{', '.join(VALID_PRIORITIES)}"
             )
         self.id = task_id
         self.title = title.strip()
@@ -41,7 +40,7 @@ class Task:
             "id": self.id,
             "title": self.title,
             "status": self.status,
-            "priority": self.priority
+            "priority": self.priority,
         }
 
 
@@ -69,8 +68,7 @@ class TaskList:
             return
         if status.lower() not in VALID_STATUSES:
             print(
-                "Error: Invalid status. Valid options: "
-                f"{', '.join(VALID_STATUSES)}"
+                "Error: Invalid status. Valid options: " f"{', '.join(VALID_STATUSES)}"
             )
             return
         task.status = status.lower()
@@ -117,9 +115,7 @@ class TaskList:
                 f"{', '.join(VALID_STATUSES | {'all'})}"
             )
             return
-        allowed_priorities = (
-            {p.lower() for p in VALID_PRIORITIES} | {"all"}
-        )
+        allowed_priorities = {p.lower() for p in VALID_PRIORITIES} | {"all"}
         if priority_filter not in allowed_priorities:
             print(
                 "Error: Invalid priority filter. Valid options: "
@@ -129,12 +125,8 @@ class TaskList:
         print("\nTasks:")
         count = 0
         for task in self.tasks:
-            if (
-                (status_filter == "all" or task.status == status_filter)
-                and (
-                    priority_filter == "all"
-                    or task.priority.lower() == priority_filter
-                )
+            if (status_filter == "all" or task.status == status_filter) and (
+                priority_filter == "all" or task.priority.lower() == priority_filter
             ):
                 print(
                     f"ID: {task.id} | Title: {task.title} | "
@@ -150,10 +142,14 @@ class TaskList:
             print("Error: Task not found.")
             return
         while True:
-            confirm = input(
-                f"Are you sure you want to delete task '{task.title}'? "
-                "(yes/no): "
-            ).strip().lower()
+            confirm = (
+                input(
+                    f"Are you sure you want to delete task '{task.title}'? "
+                    "(yes/no): "
+                )
+                .strip()
+                .lower()
+            )
             if confirm in ["yes", "no"]:
                 break
             print("Error: Please enter 'yes' or 'no'.")
@@ -201,10 +197,14 @@ class TaskList:
     def save_to_file(self, filename: str) -> None:
         try:
             with open(filename, "w") as f:
-                json.dump({
-                    "tasks": [t.to_dict() for t in self.tasks],
-                    "next_id": self.next_id
-                }, f, indent=4)
+                json.dump(
+                    {
+                        "tasks": [t.to_dict() for t in self.tasks],
+                        "next_id": self.next_id,
+                    },
+                    f,
+                    indent=4,
+                )
             print(f"Tasks saved to {filename}.")
         except (IOError, PermissionError) as e:
             print(f"Error: Failed to save tasks to {filename}. {e}")
@@ -226,7 +226,7 @@ class TaskList:
                         task_data["id"],
                         task_data["title"],
                         task_data.get("status", "todo"),
-                        task_data.get("priority", "Low")
+                        task_data.get("priority", "Low"),
                     )
                     self.tasks.append(task)
                     max_id = max(max_id, task.id)
@@ -274,9 +274,7 @@ def main():
         elif choice == "2":
             try:
                 task_id = int(input("Enter task ID to update: ").strip())
-                status = input(
-                    "Enter new status (todo, in-progress, done): "
-                ).strip()
+                status = input("Enter new status (todo, in-progress, done): ").strip()
                 task_list.update_task_status(task_id, status)
             except ValueError:
                 print("Error: Invalid task ID. Please enter a number.")
@@ -285,9 +283,7 @@ def main():
             try:
                 task_id = int(input("Enter task ID to update: ").strip())
                 print("Leave blank to keep current value.")
-                title = input(
-                    "Enter new title (or press Enter to skip): "
-                ).strip()
+                title = input("Enter new title (or press Enter to skip): ").strip()
                 priority = input(
                     "Enter new priority (High, Medium, Low, "
                     "or press Enter to skip): "
@@ -300,9 +296,7 @@ def main():
             status = input(
                 "Enter status filter (todo, in-progress, done, all): "
             ).strip()
-            priority = input(
-                "Enter priority filter (High, Medium, Low, all): "
-            ).strip()
+            priority = input("Enter priority filter (High, Medium, Low, all): ").strip()
             task_list.list_tasks(status, priority)
 
         elif choice == "5":
@@ -329,10 +323,7 @@ def main():
             break
 
         else:
-            print(
-                "Invalid choice. Please select a number between "
-                "1 and 8."
-            )
+            print("Invalid choice. Please select a number between " "1 and 8.")
 
 
 if __name__ == "__main__":
