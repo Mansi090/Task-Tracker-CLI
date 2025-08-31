@@ -1,43 +1,47 @@
-![github banner](https://github.com/user-attachments/assets/2fb6a32e-b0e7-49bd-a3a9-554affbd3d0d)
+# Enhanced Task Tracker CLI 🚀
 
-### Enhanced Task Tracker CLI 🚀  
-**A feature-rich command-line tool for managing your tasks efficiently!**  
-With support for priorities, searching, sorting, and much more, this CLI tool helps you organize your tasks like a pro. 
+**A feature-rich command-line tool for managing your tasks efficiently!**
+
+With support for priorities, searching, sorting, and task updates, this Python-based CLI tool helps you organize your tasks like a pro.
 
 ---
 
-### Features ✨  
+## Features ✨
+
 1. **Add Tasks** 📝  
-   Easily create new tasks with a title and priority (`High`, `Medium`, or `Low`).  
-   
+   Create new tasks with a title and priority (`High`, `Medium`, or `Low`).  
+
 2. **Update Task Status** 🔄  
-   Change task statuses between `todo`, `in-progress`, and `done` effortlessly.  
+   Change task statuses between `todo`, `in-progress`, and `done`.  
 
-3. **List Tasks** 📋  
-   View tasks filtered by status or see them all in one go, with clear details about priority.  
+3. **Update Task Details** ✏️  
+   Modify task titles and priorities with ease.  
 
-4. **Delete Tasks** 🗑️  
+4. **List Tasks** 📋  
+   View tasks filtered by status, priority, or both, with clear details.  
+
+5. **Delete Tasks** 🗑️  
    Safely remove tasks with confirmation prompts to avoid accidental deletions.  
 
-5. **Search Tasks** 🔍  
+6. **Search Tasks** 🔍  
    Quickly locate tasks by keywords in their titles.  
 
-6. **Sort Tasks** ⬆️⬇️  
-   Organize tasks by:
-   - **ID**
-   - **Title**
-   - **Status**
+7. **Sort Tasks** ⬆️⬇️  
+   Organize tasks by:  
+   - **ID**  
+   - **Title**  
+   - **Status**  
    - **Priority**  
 
-7. **Persistent Storage** 💾  
-   Save tasks to a file (`tasks.json`) and reload them on startup.  
+8. **Persistent Storage** 💾  
+   Save tasks to a `tasks.json` file and reload them on startup.  
 
-8. **User-Friendly Menu** 🎯  
-   Intuitive, easy-to-navigate menu for managing tasks.  
+9. **User-Friendly Menu** 🎯  
+   Intuitive, easy-to-navigate menu with case-insensitive input handling.  
 
 ---
 
-### Installation 🛠️  
+## Installation 🛠️
 
 1. **Clone the repository**:  
    ```bash
@@ -45,96 +49,124 @@ With support for priorities, searching, sorting, and much more, this CLI tool he
    cd enhanced-task-tracker
    ```
 
-2. **Run the program**:  
+2. **Ensure Python 3.5+ is installed**:  
+   Check your Python version:  
    ```bash
-   go run enhanced_task_tracker.go
+   python --version
    ```
 
-3. **(Optional)** Compile for standalone use:  
+3. **Run the program**:  
    ```bash
-   go build -o task-tracker
-   ./task-tracker
+   python src/main.py
    ```
 
 ---
 
-### Usage 🧑‍💻  
+## Usage 🧑‍💻
 
-Upon running the program, you'll see a menu:  
+Upon running the program, you'll see the following menu:
 
 ```text
-Enhanced Task Tracker CLI
+Enhanced Task Tracker CLI (Python)
 1. Add Task
 2. Update Task Status
-3. List Tasks
-4. Delete Task
-5. Search Tasks
-6. Sort Tasks
-7. Exit
+3. Update Task Details
+4. List Tasks
+5. Delete Task
+6. Search Tasks
+7. Sort Tasks
+8. Exit
 Choose an option:
 ```
 
-Simply select an option and follow the prompts to manage your tasks.  
+Select an option by entering its number and follow the prompts to manage your tasks.
 
 ---
 
-### Examples 🌟  
+## Examples 🌟
 
-#### Adding a Task  
+### Adding a Task
 ```text
-Enter task title: Learn Go
-Enter priority (High, Medium, Low): High
-Task 'Learn Go' added with ID 1.
+Choose an option: 1
+Enter task title: Learn Python
+Enter priority (High, Medium, Low): high
+Task 'Learn Python' added with ID 1.
 ```
 
-#### Listing All Tasks  
+### Listing Tasks
 ```text
-Enter status to filter by (todo, in-progress, done, all): all
+Choose an option: 4
+Enter status filter (todo, in-progress, done, all): all
+Enter priority filter (High, Medium, Low, all): all
 
 Tasks:
-ID: 1 | Title: Learn Go | Status: todo | Priority: High
+ID: 1 | Title: Learn Python | Status: todo | Priority: High
 ```
 
-#### Updating a Task's Status  
+### Updating Task Status
 ```text
+Choose an option: 2
 Enter task ID to update: 1
 Enter new status (todo, in-progress, done): in-progress
 Task ID 1 updated to status 'in-progress'.
 ```
 
-#### Searching Tasks  
+### Updating Task Details
 ```text
-Enter keyword to search for tasks: learn
+Choose an option: 3
+Enter task ID to update: 1
+Leave blank to keep current value.
+Enter new title (or press Enter to skip): Learn Advanced Python
+Enter new priority (High, Medium, Low, or press Enter to skip): Medium
+Task ID 1 updated successfully.
+```
+
+### Searching Tasks
+```text
+Choose an option: 6
+Enter keyword to search: learn
 
 Search Results:
-ID: 1 | Title: Learn Go | Status: in-progress | Priority: High
+ID: 1 | Title: Learn Advanced Python | Status: in-progress | Priority: Medium
 ```
 
-#### Sorting Tasks  
+### Sorting Tasks
 ```text
-Sort tasks by:
-1. ID
-2. Title
-3. Status
-4. Priority
-Choose an option: 4
+Choose an option: 7
+Sort by: id, title, status, priority
+Enter field: priority
+Ascending? (yes/no): yes
 Tasks sorted successfully.
+
+Tasks:
+ID: 1 | Title: Learn Advanced Python | Status: in-progress | Priority: Medium
 ```
 
 ---
 
-### Contributing 🤝  
+## Notes 📌
 
-Want to improve the Enhanced Task Tracker? Contributions are welcome!  
-
-1. Fork the repository.  
-2. Create a feature branch.  
-3. Commit your changes.  
-4. Submit a pull request.  
+- **Case-Insensitive Inputs**: Status and priority inputs are case-insensitive (e.g., "high", "HIGH", or "High" are all valid).
+- **Error Handling**: The tool provides clear error messages for invalid inputs, such as non-numeric task IDs or invalid statuses.
+- **Persistence**: Tasks are saved to `tasks.json` in the `src` directory. If the file is missing or corrupted, the program starts with an empty task list.
+- **File Permissions**: Ensure the program has write permissions in the directory to save `tasks.json`.
 
 ---
 
-### License 📜  
-This project is licensed under the MIT License.  
+## Contributing 🤝
+
+Want to improve the Enhanced Task Tracker? Contributions are welcome!
+
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -m 'Add YourFeature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Submit a pull request.
+
+---
+
+## License 📜
+
+This project is licensed under the MIT License.
 
 Enjoy productive task tracking! 🎉
