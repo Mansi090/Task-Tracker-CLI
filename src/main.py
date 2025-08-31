@@ -169,7 +169,10 @@ class TaskList:
                 self.next_id = max(max_id + 1, data.get("next_id", 1))
             print(f"Tasks loaded from {filename}.")
         except json.JSONDecodeError:
-            print(f"Error: {filename} contains invalid JSON. Starting with an empty task list.")
+            print(
+                f"Error: {filename} contains invalid JSON. "
+                "Starting with an empty task list."
+            )
             self.tasks, self.next_id = [], 1
         except (IOError, PermissionError) as e:
             print(f"Error: Failed to load tasks from {filename}. {e}")
@@ -178,7 +181,8 @@ class TaskList:
     def _find_task(self, task_id: int) -> Optional[Task]:
         return next((task for task in self.tasks if task.id == task_id), None)
 
-# CLI Menu
+
+
 def display_menu():
     print("\nEnhanced Task Tracker CLI (Python)")
     print("1. Add Task")
@@ -189,6 +193,8 @@ def display_menu():
     print("6. Search Tasks")
     print("7. Sort Tasks")
     print("8. Exit")
+
+
 
 def main():
     task_list = TaskList()
@@ -265,7 +271,6 @@ def main():
                 "Invalid choice. Please select a number between "
                 "1 and 8."
             )
-
 
 if __name__ == "__main__":
     main()
